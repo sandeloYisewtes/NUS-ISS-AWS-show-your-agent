@@ -46,6 +46,25 @@ streamlit run app.py
 
 比赛现场请直接使用侧栏的“比赛演示预设”；完整操作顺序、3 分钟讲稿与评委追问速答见 [DEMO_RUNBOOK.md](DEMO_RUNBOOK.md)。预设内容位于 [data/demo_scenarios.json](data/demo_scenarios.json)，其中第 1 至第 3 轮必须使用同一项目 ID 连续运行，才能展示动态后验更新。
 
+## 独立 Agent API
+
+除了网页，`agent_api.py` 把同一个 `DesignPreferenceAgent` 封装为可由任意前端或工作流调用的本地 HTTP 服务。它保留项目会话状态，并把每一次重置和推理追加写入 gitignored 的 `.runtime/agent_audit.jsonl`，方便比赛演示追溯；该 MVP 的状态仍在内存中，因此**重启服务会清空当前项目状态**，审计日志不等同于训练数据或生产数据库。
+
+```powershell
+cd 'D:\NUS-ISS AWS show me your agent\design-preference-agent'
+python -m pip install -r requirements.txt
+uvicorn agent_api:app --reload --port 8000
+```
+
+打开 `http://127.0.0.1:8000/docs` 可直接试用带校验的 OpenAPI 页面。主要接口为：
+
+- `GET /health`：服务和内存项目数；
+- `POST /projects/{project_id}/reset`：创建或重置一个项目，可给入已确认偏好先验；
+- `POST /projects/{project_id}/turn`：提交一个会话级证据包，获得偏好后验、方案对齐和下一步 Agent 动作；
+- `GET /projects/{project_id}/state`、`GET /projects/{project_id}/history`：读取当前状态和本进程内会话历史。
+
+接口契约测试覆盖健康检查、重置、一次完整推理、状态/历史读取、JSONL 审计和非法输入的 `422` 拒绝。
+
 ## 这版实现了什么、没有声称什么
 
 | 已实现 | 当前未实现（需真实数据） |
