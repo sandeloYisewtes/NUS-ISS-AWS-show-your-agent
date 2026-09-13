@@ -1,0 +1,17 @@
+{
+  "description": "真实数据接入的最小会话级数据契约；一条记录代表一次浏览/决策会话，不是一次点击。",
+  "required": ["project_id", "session_id", "timestamp", "evidence", "context"],
+  "fields": {
+    "project_id": "string；训练/验证/测试按该字段或 homeowner_id 隔离",
+    "session_id": "string；同一项目内按时间排序",
+    "timestamp": "ISO-8601 string",
+    "evidence.text": "list[string]；搜索词、描述、语音转写",
+    "evidence.images": "list[{case_id, tags}]；可逐步替换为视觉 embedding",
+    "evidence.actions": "list[{type, dwell_seconds}]；type 属于 save/compare/select/confirm/upload/skip",
+    "evidence.quality": "{source_reliability, duplicate_ratio, event_density}",
+    "context": "预算、户型、面积、家庭变化、装修阶段等真正外生情境",
+    "candidate_plans": "可选；必须记录方案特征、成本、面积/结构约束",
+    "outcome": "真实训练时必备：确认偏好、方案接受、修改次数、满意度",
+    "intervention": "训练 bandit/RL 时必备：Agent 动作、候选集合、展示概率、屋主下一步反馈"
+  }
+}
