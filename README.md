@@ -32,6 +32,18 @@ python -m unittest discover -s tests -v
 
 `demo.py` 会回放三轮同一屋主会话，并打印：证据质量、注意力权重、偏好后验、两个设计方案的 `E_ij/G_ij`，以及 Agent 的下一步动作。
 
+## 可视化现场演示
+
+`app.py` 是面向评委和设计师的 Streamlit 可视化 MVP：输入屋主文本、图片标签、收藏/停留等交互信号、预算/面积/结构约束，以及候选方案，即可展示偏好后验、证据质量与异常密度、方案执行度和 Agent 的下一步建议。
+
+```powershell
+cd 'D:\NUS-ISS AWS show me your agent\design-preference-agent'
+python -m pip install -r requirements.txt
+streamlit run app.py
+```
+
+浏览器会自动打开本地演示页。`data/demo_plans.json` 中的方案和页面的预填内容仅用于展示模型流程，**不是**真实训练数据，也不代表真实业务效果。
+
 ## 这版实现了什么、没有声称什么
 
 | 已实现 | 当前未实现（需真实数据） |
@@ -85,4 +97,3 @@ Amazon/服装购物数据可以作为现有 GitHub 仓库的工程参考，但**
 ## Kiro 使用方式
 
 Kiro Web 应作为开发协作者，而不是生产运行时。登录后选择 GitHub 仓库，创建独立分支，并将 [kiro_build_prompt.md](kiro_build_prompt.md) 作为第一条任务粘贴给它。要求它只在新目录内继续迭代并运行测试，不改原购物 Agent。
-
