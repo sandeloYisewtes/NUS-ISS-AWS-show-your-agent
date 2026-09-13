@@ -1,0 +1,74 @@
+{
+  "catalog_name": "Design Preference Agent — synthetic demonstration asset catalogue",
+  "version": "1.0.0",
+  "created_at": "2026-09-13",
+  "scope_notice": "All assets in this catalogue are AI-generated synthetic demonstrations. They are for hackathon demonstration and internal workflow validation only; they are not real interior projects, real homeowner records, or ground-truth training data.",
+  "assets": [
+    {
+      "asset_id": "asset_001",
+      "title": "Warm Modern Haven",
+      "asset_path": "data/assets/images/asset_001_warm_modern_haven.png",
+      "room_type": "客厅",
+      "source_type": "ai_generated",
+      "synthetic_demo": true,
+      "generator": "OpenAI image generation (built-in)",
+      "generated_at": "2026-09-13",
+      "rights_status": "team_generated_for_demo",
+      "consent_or_license_ref": "synthetic_demo_no_personal_data",
+      "source_url_or_prompt": "OpenAI image generation (built-in); prompt summary is stored in generation_prompt_summary.",
+      "generation_prompt_summary": "A fictional 82-square-metre warm modern living room with pale-oak cabinetry, a light beige sofa, concealed storage and warm lighting; no people, logos, text or watermarks.",
+      "agent_tags": ["现代简约", "温暖原木", "暖光", "收纳"],
+      "display_tags": ["浅橡木", "米色沙发", "隐藏收纳", "温暖灯光"],
+      "quality_review": {
+        "status": "human_reviewed",
+        "checks": ["no_people", "no_logos", "no_readable_text", "no_watermark", "visual_theme_matches_tags"]
+      },
+      "allowed_use": "Hackathon demo and internal workflow validation.",
+      "prohibited_claims": ["Do not present as a real interior project.", "Do not present as a real homeowner record.", "Do not use as a real-world ground-truth training label."]
+    },
+    {
+      "asset_id": "asset_002",
+      "title": "Quiet New Chinese Tea Room",
+      "asset_path": "data/assets/images/asset_002_quiet_new_chinese.png",
+      "room_type": "茶室/客厅",
+      "source_type": "ai_generated",
+      "synthetic_demo": true,
+      "generator": "OpenAI image generation (built-in)",
+      "generated_at": "2026-09-13",
+      "rights_status": "team_generated_for_demo",
+      "consent_or_license_ref": "synthetic_demo_no_personal_data",
+      "source_url_or_prompt": "OpenAI image generation (built-in); prompt summary is stored in generation_prompt_summary.",
+      "generation_prompt_summary": "A fictional 95-square-metre restrained contemporary new-Chinese tea room with walnut wood, pale stone, a tea table and warm lighting; no people, logos, text or watermarks.",
+      "agent_tags": ["新中式", "茶室", "现代简约", "温暖原木", "暖光"],
+      "display_tags": ["胡桃木", "浅石材", "克制新中式", "茶桌"],
+      "quality_review": {
+        "status": "human_reviewed",
+        "checks": ["no_people", "no_logos", "no_readable_text", "no_watermark", "visual_theme_matches_tags"]
+      },
+      "allowed_use": "Hackathon demo and internal workflow validation.",
+      "prohibited_claims": ["Do not present as a real interior project.", "Do not present as a real homeowner record.", "Do not use as a real-world ground-truth training label."]
+    },
+    {
+      "asset_id": "asset_003",
+      "title": "Smart Small-Space Living",
+      "asset_path": "data/assets/images/asset_003_smart_small_space.png",
+      "room_type": "小户型客餐厅",
+      "source_type": "ai_generated",
+      "synthetic_demo": true,
+      "generator": "OpenAI image generation (built-in)",
+      "generated_at": "2026-09-13",
+      "rights_status": "team_generated_for_demo",
+      "consent_or_license_ref": "synthetic_demo_no_personal_data",
+      "source_url_or_prompt": "OpenAI image generation (built-in); prompt summary is stored in generation_prompt_summary.",
+      "generation_prompt_summary": "A fictional 62-square-metre compact apartment with modular seating, wall-to-wall storage, a foldable dining and work table, pale wood and bright practical lighting; no people, logos, text or watermarks.",
+      "agent_tags": ["小户型", "收纳", "现代简约", "通透", "温暖原木", "暖光"],
+      "display_tags": ["壁面收纳", "紧凑餐桌", "明亮通透", "实用布局"],
+      "quality_review": {
+        "status": "human_reviewed",
+        "checks": ["no_people", "no_logos", "no_readable_text", "no_watermark", "visual_theme_matches_tags"]
+      },
+      "allowed_use": "Hackathon demo and internal workflow validation.",
+      "prohibited_claims": ["Do not present as a real interior project.", "Do not present as a real homeowner record.", "Do not use as a real-world ground-truth training label."]
+    }
+  ]
+}

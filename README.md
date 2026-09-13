@@ -101,6 +101,24 @@ Amazon/服装购物数据可以作为现有 GitHub 仓库的工程参考，但**
 - **受试者任务数据**：让小规模真实用户完成 3 轮案例选择与方案评价，获得第一批干净标签。
 - **状态空间模拟数据**：人工设定隐藏的 `z_it`，检验贝叶斯恢复与策略逻辑；不能替代真实满意度。
 
+## 合成素材库与可回放案例
+
+项目现已附带三张经过人工检查的 AI 生成模拟装修截图，以及可直接回放的三轮屋主会话案例：
+
+- [素材库表（CSV）](data/assets/asset_catalog.csv) / [程序可读目录（JSON）](data/assets/asset_catalog.json)
+- [标签规范](data/assets/tag_spec.json)：只将审核后的 `agent_tags` 投影到当前 Agent；生成提示词、版权字段、展示标签都不进入偏好推断。
+- [单案例模板（可填写版）](data/templates/homeowner_case_template.md) / [结构化 JSON 模板](data/templates/homeowner_case_template.json)：含公开 Agent 输入与隔离的 `hidden_evaluation_labels`。
+- [三个模拟案例](data/cases)：温暖现代原木、克制新中式茶空间、小户型收纳与预算优先。
+
+三张图片及其会话都明确标记为 `synthetic_demo`，仅用于比赛演示和流程验证，**不是**真实装修项目、真实屋主数据或真实训练标签。当前 MVP 读取图片的审核标签，而不是直接训练或调用视觉模型。
+
+```powershell
+cd 'D:\NUS-ISS AWS show me your agent\design-preference-agent'
+python run_seed_cases.py
+```
+
+该脚本按会话顺序回放三例，先完成推断，再读取 `hidden_ground_truth` 生成离线报告。三例分别标有建议的开发、验证、测试项目切分，但本脚本**不训练**任何参数；不一致是模型当前能力边界的诊断信号，不能被塞回同一轮推断中。
+
 ## 训练、验证、测试：必须先写死的规则
 
 1. 以 `project_id` 或 `homeowner_id` 为分组单位；同一项目的所有会话、方案版本只能进入一个 split。

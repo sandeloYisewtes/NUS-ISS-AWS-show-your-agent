@@ -1,0 +1,163 @@
+{
+  "project_id": "synthetic_home_002",
+  "title": "克制新中式茶空间",
+  "source_type": "synthetic_demo",
+  "synthetic_demo": true,
+  "suggested_project_split": "validation",
+  "description": "用于验证：同一“新中式”标签下，屋主也可能偏好克制、简约、暖木与茶空间；人工真值保留了当前七维 MVP 尚未单独建模的“避免繁复传统装饰”要求。",
+  "sessions": [
+    {
+      "session_id": "home_002_s01",
+      "timestamp": "2026-09-02T11:00:00+08:00",
+      "evidence": {
+        "text": [
+          "我喜欢新中式的安静感，想在书房留一个小茶室，但不要太繁复。"
+        ],
+        "images": [
+          {
+            "case_id": "asset_002",
+          "tags": ["新中式", "茶室", "原木"]
+          }
+        ],
+        "actions": [
+          {"type": "save", "dwell_seconds": 84}
+        ],
+        "quality": {
+          "source_reliability": 0.91,
+          "duplicate_ratio": 0.0,
+          "event_density": 1.0
+        }
+      },
+      "context": {
+        "budget_max": 260000,
+        "area_sqm": 108,
+        "family_members": 2,
+        "rooms": 4,
+        "stage": "inspiration",
+        "no_structural_change": true
+      },
+      "confirmed_preferences": []
+    },
+    {
+      "session_id": "home_002_s02",
+      "timestamp": "2026-09-09T15:40:00+08:00",
+      "evidence": {
+        "text": [
+          "木饰面可以有，但希望线条简约、光线偏暖，茶室不需要做成传统展厅。"
+        ],
+        "images": [
+          {
+            "case_id": "asset_002",
+            "tags": ["木饰面", "简约", "暖光", "茶室"]
+          }
+        ],
+        "actions": [
+          {"type": "compare", "dwell_seconds": 132},
+          {"type": "select", "dwell_seconds": 58}
+        ],
+        "quality": {
+          "source_reliability": 0.94,
+          "duplicate_ratio": 0.05,
+          "event_density": 1.2
+        }
+      },
+      "context": {
+        "budget_max": 260000,
+        "area_sqm": 108,
+        "family_members": 2,
+        "rooms": 4,
+        "stage": "preference_refinement",
+        "no_structural_change": true
+      },
+      "confirmed_preferences": []
+    },
+    {
+      "session_id": "home_002_s03",
+      "timestamp": "2026-09-16T18:20:00+08:00",
+      "evidence": {
+        "text": [
+          "我确认要新中式和茶室，但整体一定要简约、温暖，不要厚重或复杂的传统装饰。"
+        ],
+        "images": [
+          {
+            "case_id": "asset_002",
+            "tags": ["新中式", "茶室", "现代简约", "暖色灯光", "原木"]
+          }
+        ],
+        "actions": [
+          {"type": "confirm", "dwell_seconds": 140},
+          {"type": "select", "dwell_seconds": 88}
+        ],
+        "quality": {
+          "source_reliability": 0.98,
+          "duplicate_ratio": 0.0,
+          "event_density": 0.85
+        }
+      },
+      "context": {
+        "budget_max": 260000,
+        "area_sqm": 108,
+        "family_members": 2,
+        "rooms": 4,
+        "stage": "brief_confirmation",
+        "no_structural_change": true
+      },
+      "confirmed_preferences": [
+        "new_chinese",
+        "modern_minimal",
+        "warm_wood",
+        "warm_lighting"
+      ]
+    }
+  ],
+  "candidate_plans": [
+    {
+      "plan_id": "home_002_plan_a_restrained_tea",
+      "name": "克制新中式茶空间方案",
+      "estimated_cost": 238000,
+      "min_area_sqm": 92,
+      "requires_structural_change": false,
+      "features": {
+        "new_chinese": 0.88,
+        "modern_minimal": 0.76,
+        "warm_wood": 0.8,
+        "warm_lighting": 0.82,
+        "storage_priority": 0.55,
+        "open_space": 0.7,
+        "budget_sensitive": 0.56
+      }
+    },
+    {
+      "plan_id": "home_002_plan_b_ornate_traditional",
+      "name": "厚重传统中式展示方案",
+      "estimated_cost": 258000,
+      "min_area_sqm": 100,
+      "requires_structural_change": false,
+      "features": {
+        "new_chinese": 0.96,
+        "modern_minimal": 0.08,
+        "warm_wood": 0.45,
+        "warm_lighting": 0.35,
+        "storage_priority": 0.48,
+        "open_space": 0.35,
+        "budget_sensitive": 0.3
+      }
+    }
+  ],
+  "hidden_ground_truth": {
+    "agent_visibility": "NOT_FOR_AGENT",
+    "do_not_send_to_agent": true,
+    "purpose": "仅供离线评估，并刻意保留 MVP 词典当前无法充分区分的“克制”与“繁复”细粒度风格差异。",
+    "confirmed_preferences": [
+      "new_chinese",
+      "modern_minimal",
+      "warm_wood",
+      "warm_lighting"
+    ],
+    "rejected_preferences": ["ornate_traditional_chinese", "heavy_dark_wood"],
+    "preferred_plan_id": "home_002_plan_a_restrained_tea",
+    "expected_next_action_after_session_1": "SHOW",
+    "expected_final_plan_classification": "aligned",
+    "known_mvp_gap": "当前七维 Agent 没有独立的 ornate_vs_restrained 维度；本案例用于暴露这一扩展需求，而不是声称现有模型已能精确识别它。"
+  }
+}

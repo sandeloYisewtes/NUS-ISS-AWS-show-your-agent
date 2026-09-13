@@ -1,0 +1,164 @@
+{
+  "project_id": "synthetic_home_001",
+  "title": "温暖现代原木的三口之家",
+  "source_type": "synthetic_demo",
+  "synthetic_demo": true,
+  "suggested_project_split": "development",
+  "description": "用于验证：多轮文本、图片标签与收藏行为会逐步提高“温暖原木、暖光、现代简约、收纳”的后验支持度。所有人物、文字和素材引用均为合成演示数据。",
+  "sessions": [
+    {
+      "session_id": "home_001_s01",
+      "timestamp": "2026-09-01T10:15:00+08:00",
+      "evidence": {
+        "text": [
+          "82平三口之家，喜欢温暖原木和现代简约，不想让客厅显得冷。"
+        ],
+        "images": [
+          {
+            "case_id": "asset_001",
+          "tags": ["温暖原木", "现代简约", "暖光"]
+          }
+        ],
+        "actions": [
+          {"type": "save", "dwell_seconds": 62}
+        ],
+        "quality": {
+          "source_reliability": 0.9,
+          "duplicate_ratio": 0.0,
+          "event_density": 1.1
+        }
+      },
+      "context": {
+        "budget_max": 180000,
+        "area_sqm": 82,
+        "family_members": 3,
+        "rooms": 3,
+        "stage": "inspiration",
+        "no_structural_change": true
+      },
+      "confirmed_preferences": []
+    },
+    {
+      "session_id": "home_001_s02",
+      "timestamp": "2026-09-06T19:30:00+08:00",
+      "evidence": {
+        "text": [
+          "希望电视墙和餐边柜有收纳，暖色灯光比冷白光舒服。"
+        ],
+        "images": [
+          {
+            "case_id": "asset_001",
+            "tags": ["原木", "收纳", "暖色灯光", "现代简约"]
+          }
+        ],
+        "actions": [
+          {"type": "compare", "dwell_seconds": 95},
+          {"type": "save", "dwell_seconds": 46}
+        ],
+        "quality": {
+          "source_reliability": 0.93,
+          "duplicate_ratio": 0.08,
+          "event_density": 1.4
+        }
+      },
+      "context": {
+        "budget_max": 180000,
+        "area_sqm": 82,
+        "family_members": 3,
+        "rooms": 3,
+        "stage": "preference_refinement",
+        "no_structural_change": true
+      },
+      "confirmed_preferences": []
+    },
+    {
+      "session_id": "home_001_s03",
+      "timestamp": "2026-09-12T20:10:00+08:00",
+      "evidence": {
+        "text": [
+          "我确认喜欢温暖原木、现代简约和暖光；收纳必须够用，预算不超过十八万。"
+        ],
+        "images": [
+          {
+            "case_id": "asset_001",
+            "tags": ["温暖原木", "现代简约", "暖光", "收纳"]
+          }
+        ],
+        "actions": [
+          {"type": "confirm", "dwell_seconds": 120},
+          {"type": "select", "dwell_seconds": 75}
+        ],
+        "quality": {
+          "source_reliability": 0.98,
+          "duplicate_ratio": 0.0,
+          "event_density": 0.9
+        }
+      },
+      "context": {
+        "budget_max": 180000,
+        "area_sqm": 82,
+        "family_members": 3,
+        "rooms": 3,
+        "stage": "brief_confirmation",
+        "no_structural_change": true
+      },
+      "confirmed_preferences": [
+        "warm_wood",
+        "modern_minimal",
+        "warm_lighting",
+        "storage_priority",
+        "budget_sensitive"
+      ]
+    }
+  ],
+  "candidate_plans": [
+    {
+      "plan_id": "home_001_plan_a_wood_balance",
+      "name": "温暖原木收纳平衡方案",
+      "estimated_cost": 172000,
+      "min_area_sqm": 72,
+      "requires_structural_change": false,
+      "features": {
+        "new_chinese": 0.2,
+        "modern_minimal": 0.9,
+        "warm_wood": 0.96,
+        "warm_lighting": 0.9,
+        "storage_priority": 0.92,
+        "open_space": 0.68,
+        "budget_sensitive": 0.85
+      }
+    },
+    {
+      "plan_id": "home_001_plan_b_dark_luxury",
+      "name": "深色轻奢开放式方案",
+      "estimated_cost": 245000,
+      "min_area_sqm": 88,
+      "requires_structural_change": true,
+      "features": {
+        "new_chinese": 0.1,
+        "modern_minimal": 0.28,
+        "warm_wood": 0.15,
+        "warm_lighting": 0.25,
+        "storage_priority": 0.3,
+        "open_space": 0.95,
+        "budget_sensitive": 0.1
+      }
+    }
+  ],
+  "hidden_ground_truth": {
+    "agent_visibility": "NOT_FOR_AGENT",
+    "do_not_send_to_agent": true,
+    "purpose": "仅供离线评估。执行推断时不得将本对象或其字段拼接进 API 请求。",
+    "confirmed_preferences": [
+      "warm_wood",
+      "modern_minimal",
+      "warm_lighting",
+      "storage_priority",
+      "budget_sensitive"
+    ],
+    "rejected_preferences": ["cold_lighting", "dark_luxury"],
+    "preferred_plan_id": "home_001_plan_a_wood_balance",
+    "expected_next_action_after_session_1": "SHOW",
+    "expected_final_plan_classification": "aligned"
+  }
+}

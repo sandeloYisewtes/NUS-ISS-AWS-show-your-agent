@@ -1,0 +1,4 @@
+asset_id,title,asset_path,room_type,source_type,synthetic_demo,rights_status,source_url_or_prompt,consent_or_license_ref,created_at,agent_tags,display_tags,qa_status
+asset_001,Warm Modern Haven,data/assets/images/asset_001_warm_modern_haven.png,客厅,ai_generated,TRUE,team_generated_for_demo,openai_builtin_prompt_summary_in_json,synthetic_demo_no_personal_data,2026-09-13,现代简约|温暖原木|暖光|收纳,浅橡木|米色沙发|隐藏收纳|温暖灯光,human_reviewed
+asset_002,Quiet New Chinese Tea Room,data/assets/images/asset_002_quiet_new_chinese.png,茶室/客厅,ai_generated,TRUE,team_generated_for_demo,openai_builtin_prompt_summary_in_json,synthetic_demo_no_personal_data,2026-09-13,新中式|茶室|现代简约|温暖原木|暖光,胡桃木|浅石材|克制新中式|茶桌,human_reviewed
+asset_003,Smart Small-Space Living,data/assets/images/asset_003_smart_small_space.png,小户型客餐厅,ai_generated,TRUE,team_generated_for_demo,openai_builtin_prompt_summary_in_json,synthetic_demo_no_personal_data,2026-09-13,小户型|收纳|现代简约|通透|温暖原木|暖光,壁面收纳|紧凑餐桌|明亮通透|实用布局,human_reviewed

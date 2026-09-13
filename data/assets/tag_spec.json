@@ -1,0 +1,251 @@
+{
+  "schema_name": "Design Preference Agent - Asset Library and Tag Specification",
+  "version": "1.0.0",
+  "language": "zh-CN",
+  "purpose": "为装修灵感素材库提供可追溯的素材表字段、人工标签规范，以及投影到 V7 Agent 证据输入的规则。它不是训练数据集，也不包含真实屋主个人信息。",
+  "synthetic_demo_policy": {
+    "synthetic_demo_marker_required": true,
+    "allowed_demo_source_type": "ai_generated",
+    "required_notice": "所有 AI 生成素材必须标记 synthetic_demo=true；仅用于比赛演示和流程验证，不得表述为真实案例、真实屋主行为或真实训练语料。",
+    "production_rule": "接入真实素材前，必须将 source_type、rights_status、source_url_or_prompt 和 consent_or_license_ref 补全。"
+  },
+  "asset_catalog_row_template": {
+    "asset_id": "asset_ai_001",
+    "title": "现代原木暖光客厅（示意）",
+    "asset_path": "assets/ai_generated/asset_ai_001.png",
+    "room_type": "客厅",
+    "source_type": "ai_generated",
+    "synthetic_demo": true,
+    "rights_status": "team_generated_for_demo",
+    "source_url_or_prompt": "AI prompt 或获得授权的来源 URL；不得留空",
+    "consent_or_license_ref": "demo-team-asset-log-001",
+    "created_at": "2026-09-13T12:00:00+08:00",
+    "agent_tags": [
+      "现代简约",
+      "温暖原木",
+      "暖光",
+      "收纳"
+    ],
+    "display_tags": [
+      "客厅",
+      "低饱和",
+      "木饰面"
+    ],
+    "qa_status": "human_reviewed"
+  },
+  "asset_table_columns": [
+    {
+      "field": "asset_id",
+      "required": true,
+      "description": "素材唯一 ID；供 API evidence.images[].case_id 引用。不要使用屋主姓名、手机号或地址。"
+    },
+    {
+      "field": "title",
+      "required": true,
+      "description": "展示给团队/屋主的短标题。"
+    },
+    {
+      "field": "asset_path",
+      "required": true,
+      "description": "仓库或对象存储中的相对路径；当前 MVP 不把原始图片直接传入 Agent。"
+    },
+    {
+      "field": "room_type",
+      "required": true,
+      "allowed_examples": [
+        "客厅",
+        "卧室",
+        "餐厨",
+        "书房",
+        "卫生间",
+        "全屋"
+      ],
+      "description": "素材空间类型；仅供检索与展示，不直接改变当前 Agent 后验。"
+    },
+    {
+      "field": "source_type",
+      "required": true,
+      "allowed_values": [
+        "ai_generated",
+        "team_created",
+        "owner_uploaded_with_consent",
+        "licensed_external"
+      ],
+      "description": "素材来源类型。"
+    },
+    {
+      "field": "synthetic_demo",
+      "required": true,
+      "type": "boolean",
+      "description": "true 表示 AI/人工构造的比赛演示素材，而非真实案例。"
+    },
+    {
+      "field": "rights_status",
+      "required": true,
+      "description": "例如 team_generated_for_demo、owner_consent_recorded、license_verified。"
+    },
+    {
+      "field": "source_url_or_prompt",
+      "required": true,
+      "description": "外部授权素材记录 URL；AI 素材记录完整生成 prompt、模型和日期。"
+    },
+    {
+      "field": "consent_or_license_ref",
+      "required": true,
+      "description": "同意书、许可证或团队素材登记的引用 ID。"
+    },
+    {
+      "field": "agent_tags",
+      "required": true,
+      "description": "传给 Agent 的规范中文标签；每张素材建议 2–6 个，必须使用本文件 model_dimensions 中的可识别词。"
+    },
+    {
+      "field": "display_tags",
+      "required": false,
+      "description": "仅用于筛选和 UI 展示的附加标签；当前规则 MVP 不一定读取。"
+    },
+    {
+      "field": "qa_status",
+      "required": true,
+      "allowed_values": [
+        "draft",
+        "human_reviewed",
+        "approved_for_demo",
+        "retired"
+      ],
+      "description": "人工审核状态；未审核素材不应用于比赛最终演示。"
+    }
+  ],
+  "model_dimensions": [
+    {
+      "dimension": "new_chinese",
+      "label": "新中式 / 东方感",
+      "meaning": "偏好东方元素、新中式、茶室等设计表达的强度。",
+      "recognized_tags": [
+        "新中式",
+        "中式",
+        "茶室"
+      ]
+    },
+    {
+      "dimension": "modern_minimal",
+      "label": "现代简约",
+      "meaning": "偏好现代、简洁、低复杂度设计表达的强度。",
+      "recognized_tags": [
+        "现代简约",
+        "极简",
+        "简约"
+      ]
+    },
+    {
+      "dimension": "warm_wood",
+      "label": "温暖原木",
+      "meaning": "偏好原木、木饰面和温润材质的强度。",
+      "recognized_tags": [
+        "温暖原木",
+        "原木",
+        "木饰面"
+      ]
+    },
+    {
+      "dimension": "warm_lighting",
+      "label": "暖色灯光",
+      "meaning": "偏好暖光、暖色照明氛围的强度。",
+      "recognized_tags": [
+        "暖光",
+        "暖色灯光"
+      ]
+    },
+    {
+      "dimension": "storage_priority",
+      "label": "收纳优先",
+      "meaning": "对储物、隐形收纳和空间组织的重视程度。",
+      "recognized_tags": [
+        "收纳",
+        "储物"
+      ]
+    },
+    {
+      "dimension": "open_space",
+      "label": "通透开放空间",
+      "meaning": "对通透感、开放布局和小户型空间利用的偏好强度。",
+      "recognized_tags": [
+        "通透",
+        "开放式",
+        "小户型"
+      ]
+    },
+    {
+      "dimension": "budget_sensitive",
+      "label": "预算敏感度",
+      "meaning": "对预算上限、性价比和成本控制的重视程度。",
+      "recognized_tags": [
+        "预算",
+        "性价比",
+        "不超过",
+        "省"
+      ]
+    }
+  ],
+  "tagging_rules": {
+    "normalization": [
+      "agent_tags 使用简体中文、去首尾空格，避免同义词自由拼写。",
+      "一张素材的 agent_tags 只标注画面可见或可合理判断的设计属性；不把屋主主观喜欢/不喜欢写进素材标签。",
+      "屋主的否定偏好放入会话 evidence.text，例如“不喜欢复杂中式”；不能把“不喜欢中式”作为素材本体标签。",
+      "未被当前 Agent 词典识别的风格词可放入 display_tags，并在后续扩展词典前不应当作已被模型利用。"
+    ],
+    "recommended_cardinality": {
+      "agent_tags_per_asset_min": 2,
+      "agent_tags_per_asset_max": 6,
+      "display_tags_per_asset_max": 10
+    },
+    "quality_control": [
+      "每张素材由至少一名团队成员人工复核后标为 human_reviewed。",
+      "同一视觉或同一 AI 生成变体不得大量重复进入同一会话；应在质量字段 duplicate_ratio 中反映重复风险。",
+      "素材来源、许可证/同意记录与 AI prompt 不作为偏好推断文本，避免把版权元数据误当屋主证据。"
+    ]
+  },
+  "agent_api_projection": {
+    "rule": "只将 asset_id 和 agent_tags 投影给当前 Agent；资产来源、许可证、prompt、display_tags 保留在素材库中。",
+    "image_evidence_example": {
+      "case_id": "asset_ai_001",
+      "tags": [
+        "现代简约",
+        "温暖原木",
+        "暖光",
+        "收纳"
+      ]
+    },
+    "event_example": {
+      "evidence": {
+        "images": [
+          {
+            "case_id": "asset_ai_001",
+            "tags": [
+              "现代简约",
+              "温暖原木",
+              "暖光",
+              "收纳"
+            ]
+          }
+        ],
+        "actions": [
+          {
+            "type": "save",
+            "dwell_seconds": 35
+          }
+        ]
+      }
+    }
+  },
+  "explicit_non_inference_fields": [
+    "source_type",
+    "synthetic_demo",
+    "rights_status",
+    "source_url_or_prompt",
+    "consent_or_license_ref",
+    "qa_status",
+    "人工标注的真实偏好标签",
+    "最终接受方案与满意度"
+  ]
+}

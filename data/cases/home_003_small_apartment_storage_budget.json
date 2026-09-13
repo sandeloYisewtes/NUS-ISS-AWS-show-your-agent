@@ -1,0 +1,165 @@
+{
+  "project_id": "synthetic_home_003",
+  "title": "小户型收纳与预算优先",
+  "source_type": "synthetic_demo",
+  "synthetic_demo": true,
+  "suggested_project_split": "test",
+  "description": "用于验证：在小面积、三人居住和固定预算的外生情境下，Agent 应把收纳、通透与预算作为高价值约束，而不能只追随风格图片。",
+  "sessions": [
+    {
+      "session_id": "home_003_s01",
+      "timestamp": "2026-09-03T09:20:00+08:00",
+      "evidence": {
+        "text": [
+          "55平两居住三个人，预算十万内，最担心东西没地方放。"
+        ],
+        "images": [
+          {
+            "case_id": "asset_003",
+            "tags": ["小户型", "收纳", "现代简约", "通透"]
+          }
+        ],
+        "actions": [
+          {"type": "save", "dwell_seconds": 76}
+        ],
+        "quality": {
+          "source_reliability": 0.92,
+          "duplicate_ratio": 0.0,
+          "event_density": 1.05
+        }
+      },
+      "context": {
+        "budget_max": 100000,
+        "area_sqm": 55,
+        "family_members": 3,
+        "rooms": 2,
+        "stage": "inspiration",
+        "no_structural_change": true
+      },
+      "confirmed_preferences": []
+    },
+    {
+      "session_id": "home_003_s02",
+      "timestamp": "2026-09-05T21:05:00+08:00",
+      "evidence": {
+        "text": [
+          "喜欢柜子做到顶和隐藏收纳，也希望视觉通透，性价比很重要。"
+        ],
+        "images": [
+          {
+            "case_id": "asset_003",
+            "tags": ["收纳", "通透", "极简", "原木"]
+          }
+        ],
+        "actions": [
+          {"type": "compare", "dwell_seconds": 110},
+          {"type": "save", "dwell_seconds": 52}
+        ],
+        "quality": {
+          "source_reliability": 0.95,
+          "duplicate_ratio": 0.06,
+          "event_density": 1.3
+        }
+      },
+      "context": {
+        "budget_max": 100000,
+        "area_sqm": 55,
+        "family_members": 3,
+        "rooms": 2,
+        "stage": "preference_refinement",
+        "no_structural_change": true
+      },
+      "confirmed_preferences": []
+    },
+    {
+      "session_id": "home_003_s03",
+      "timestamp": "2026-09-11T20:35:00+08:00",
+      "evidence": {
+        "text": [
+          "我确认收纳和预算必须优先；现代简约、原木和通透感是偏好，但不能拆墙。"
+        ],
+        "images": [
+          {
+            "case_id": "asset_003",
+            "tags": ["收纳", "现代简约", "原木", "通透"]
+          }
+        ],
+        "actions": [
+          {"type": "confirm", "dwell_seconds": 130},
+          {"type": "select", "dwell_seconds": 70}
+        ],
+        "quality": {
+          "source_reliability": 0.98,
+          "duplicate_ratio": 0.0,
+          "event_density": 0.9
+        }
+      },
+      "context": {
+        "budget_max": 100000,
+        "area_sqm": 55,
+        "family_members": 3,
+        "rooms": 2,
+        "stage": "brief_confirmation",
+        "no_structural_change": true
+      },
+      "confirmed_preferences": [
+        "storage_priority",
+        "budget_sensitive",
+        "modern_minimal",
+        "warm_wood",
+        "open_space"
+      ]
+    }
+  ],
+  "candidate_plans": [
+    {
+      "plan_id": "home_003_plan_a_storage_first",
+      "name": "小户型顶天立地收纳方案",
+      "estimated_cost": 96000,
+      "min_area_sqm": 48,
+      "requires_structural_change": false,
+      "features": {
+        "new_chinese": 0.1,
+        "modern_minimal": 0.86,
+        "warm_wood": 0.7,
+        "warm_lighting": 0.64,
+        "storage_priority": 0.98,
+        "open_space": 0.78,
+        "budget_sensitive": 0.95
+      }
+    },
+    {
+      "plan_id": "home_003_plan_b_open_remodel",
+      "name": "开放式拆改视觉扩容方案",
+      "estimated_cost": 142000,
+      "min_area_sqm": 58,
+      "requires_structural_change": true,
+      "features": {
+        "new_chinese": 0.12,
+        "modern_minimal": 0.88,
+        "warm_wood": 0.55,
+        "warm_lighting": 0.55,
+        "storage_priority": 0.38,
+        "open_space": 0.96,
+        "budget_sensitive": 0.12
+      }
+    }
+  ],
+  "hidden_ground_truth": {
+    "agent_visibility": "NOT_FOR_AGENT",
+    "do_not_send_to_agent": true,
+    "purpose": "仅供离线评估。此案例检查硬约束是否压过看似吸引人的“开放式”方案。",
+    "confirmed_preferences": [
+      "storage_priority",
+      "budget_sensitive",
+      "modern_minimal",
+      "warm_wood",
+      "open_space"
+    ],
+    "hard_constraints": ["budget_max", "no_structural_change", "area_sqm"],
+    "preferred_plan_id": "home_003_plan_a_storage_first",
+    "expected_next_action_after_session_1": "SHOW",
+    "expected_final_plan_classification": "aligned",
+    "expected_rejected_plan_classification": "hard_constraint_failed"
+  }
+}
