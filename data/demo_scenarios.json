@@ -1,0 +1,197 @@
+{
+  "1. 对齐｜第 1 轮：确认偏好，但先降低不确定性": {
+    "project_id": "pitch_alignment_001",
+    "description": "屋主首次给出高质量、多模态、明确确认的偏好。系统不应立即过度自信，而应先展示可区分的 Mood Board。",
+    "text": "我明确确认喜欢新中式木饰面、温暖原木、暖色灯光；小户型必须收纳充足，预算十八万内。",
+    "image_tags": ["新中式", "原木", "暖光", "收纳"],
+    "actions": ["confirm", "select"],
+    "dwell_seconds": 200,
+    "quality": {
+      "source_reliability": 0.98,
+      "duplicate_ratio": 0.0,
+      "event_density": 0.8
+    },
+    "context": {
+      "budget_max": 180000,
+      "area_sqm": 78,
+      "family_members": 3,
+      "no_structural_change": true
+    },
+    "confirmed_dimensions": ["new_chinese", "warm_wood", "warm_lighting", "storage_priority", "budget_sensitive"],
+    "plans": [
+      {
+        "plan_id": "plan_confirmed_match",
+        "name": "已确认偏好匹配方案",
+        "estimated_cost": 168000,
+        "min_area_sqm": 68,
+        "requires_structural_change": false,
+        "features": {
+          "new_chinese": 1.0,
+          "modern_minimal": 0.5,
+          "warm_wood": 1.0,
+          "warm_lighting": 1.0,
+          "storage_priority": 1.0,
+          "open_space": 0.5,
+          "budget_sensitive": 1.0
+        }
+      }
+    ],
+    "expected_hint": "方案已具备较高执行度，但系统仍会优先 SHOW，说明不会因一次会话就仓促展示最终方案。"
+  },
+  "2. 对齐｜第 2 轮：同一项目累积证据后展示方案": {
+    "project_id": "pitch_alignment_001",
+    "description": "保持第 1 轮的同一项目 ID，不重置项目。第二次高质量确认会降低后验不确定性。",
+    "text": "我明确确认喜欢新中式木饰面、温暖原木、暖色灯光；小户型必须收纳充足，预算十八万内。",
+    "image_tags": ["新中式", "原木", "暖光", "收纳"],
+    "actions": ["confirm", "select"],
+    "dwell_seconds": 200,
+    "quality": {
+      "source_reliability": 0.98,
+      "duplicate_ratio": 0.0,
+      "event_density": 0.8
+    },
+    "context": {
+      "budget_max": 180000,
+      "area_sqm": 78,
+      "family_members": 3,
+      "no_structural_change": true
+    },
+    "confirmed_dimensions": ["new_chinese", "warm_wood", "warm_lighting", "storage_priority", "budget_sensitive"],
+    "plans": [
+      {
+        "plan_id": "plan_confirmed_match",
+        "name": "已确认偏好匹配方案",
+        "estimated_cost": 168000,
+        "min_area_sqm": 68,
+        "requires_structural_change": false,
+        "features": {
+          "new_chinese": 1.0,
+          "modern_minimal": 0.5,
+          "warm_wood": 1.0,
+          "warm_lighting": 1.0,
+          "storage_priority": 1.0,
+          "open_space": 0.5,
+          "budget_sensitive": 1.0
+        }
+      }
+    ],
+    "expected_hint": "预期为 aligned，且下一步动作 PRESENT，体现‘动态累积证据后再展示方案’。"
+  },
+  "3. 错位｜第 3 轮：把候选方案替换为风格冲突方案": {
+    "project_id": "pitch_alignment_001",
+    "description": "仍使用同一项目的已确认偏好，只替换设计师候选方案，验证偏好估计与方案判断是两条独立链路。",
+    "text": "我明确确认喜欢新中式木饰面、温暖原木、暖色灯光；小户型必须收纳充足，预算十八万内。",
+    "image_tags": ["新中式", "原木", "暖光", "收纳"],
+    "actions": ["confirm", "select"],
+    "dwell_seconds": 200,
+    "quality": {
+      "source_reliability": 0.98,
+      "duplicate_ratio": 0.0,
+      "event_density": 0.8
+    },
+    "context": {
+      "budget_max": 180000,
+      "area_sqm": 78,
+      "family_members": 3,
+      "no_structural_change": true
+    },
+    "confirmed_dimensions": ["new_chinese", "warm_wood", "warm_lighting", "storage_priority", "budget_sensitive"],
+    "plans": [
+      {
+        "plan_id": "plan_dark_luxury",
+        "name": "深色轻奢方案",
+        "estimated_cost": 170000,
+        "min_area_sqm": 65,
+        "requires_structural_change": false,
+        "features": {
+          "new_chinese": 0.05,
+          "modern_minimal": 0.2,
+          "warm_wood": 0.05,
+          "warm_lighting": 0.12,
+          "storage_priority": 0.25,
+          "open_space": 0.55,
+          "budget_sensitive": 0.25
+        }
+      }
+    ],
+    "expected_hint": "预期为 misaligned，且下一步动作 RECOMMEND；系统会说明高重要度偏好没有被方案体现。"
+  },
+  "4. 证据不足｜模糊需求时先追问": {
+    "project_id": "pitch_uncertain_001",
+    "description": "屋主只给出模糊表达，演示‘证据不足’不会被误判成‘设计师错位’。",
+    "text": "想装修得舒服一点。",
+    "image_tags": [],
+    "actions": [],
+    "dwell_seconds": 0,
+    "quality": {
+      "source_reliability": 0.45,
+      "duplicate_ratio": 0.0,
+      "event_density": 0.8
+    },
+    "context": {
+      "budget_max": 180000,
+      "area_sqm": 78,
+      "family_members": 3,
+      "no_structural_change": true
+    },
+    "confirmed_dimensions": [],
+    "plans": [
+      {
+        "plan_id": "plan_confirmed_match",
+        "name": "待比较方案",
+        "estimated_cost": 168000,
+        "min_area_sqm": 68,
+        "requires_structural_change": false,
+        "features": {
+          "new_chinese": 1.0,
+          "modern_minimal": 0.5,
+          "warm_wood": 1.0,
+          "warm_lighting": 1.0,
+          "storage_priority": 1.0,
+          "open_space": 0.5,
+          "budget_sensitive": 1.0
+        }
+      }
+    ],
+    "expected_hint": "预期为 needs_owner_confirmation，且下一步动作 ASK。"
+  },
+  "5. 异常密度｜短时间重复浏览时暂缓结论": {
+    "project_id": "pitch_anomaly_001",
+    "description": "模拟短时间重复刷同一类内容；异常密度应只降低证据权重，而不是被系统直接当成真实偏好。",
+    "text": "原木 原木 原木 原木 原木 我好像喜欢原木。",
+    "image_tags": ["原木", "原木", "原木", "原木"],
+    "actions": ["save"],
+    "dwell_seconds": 6,
+    "quality": {
+      "source_reliability": 0.35,
+      "duplicate_ratio": 0.95,
+      "event_density": 11.5
+    },
+    "context": {
+      "budget_max": 180000,
+      "area_sqm": 78,
+      "family_members": 3,
+      "no_structural_change": true
+    },
+    "confirmed_dimensions": [],
+    "plans": [
+      {
+        "plan_id": "plan_confirmed_match",
+        "name": "待比较方案",
+        "estimated_cost": 168000,
+        "min_area_sqm": 68,
+        "requires_structural_change": false,
+        "features": {
+          "new_chinese": 1.0,
+          "modern_minimal": 0.5,
+          "warm_wood": 1.0,
+          "warm_lighting": 1.0,
+          "storage_priority": 1.0,
+          "open_space": 0.5,
+          "budget_sensitive": 1.0
+        }
+      }
+    ],
+    "expected_hint": "预期为异常密度高、质量低，且下一步动作 DEFER。"
+  }
+}

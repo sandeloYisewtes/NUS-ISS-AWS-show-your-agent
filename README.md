@@ -22,7 +22,7 @@
 
 ## 运行
 
-本项目只需 Python 3.10+，不依赖第三方包。
+核心 Agent 只需 Python 3.10+，不依赖第三方包；可视化 Demo 额外使用 Streamlit。
 
 ```powershell
 cd 'D:\NUS-ISS AWS show me your agent\design-preference-agent'
@@ -43,6 +43,8 @@ streamlit run app.py
 ```
 
 浏览器会自动打开本地演示页。`data/demo_plans.json` 中的方案和页面的预填内容仅用于展示模型流程，**不是**真实训练数据，也不代表真实业务效果。
+
+比赛现场请直接使用侧栏的“比赛演示预设”；完整操作顺序、3 分钟讲稿与评委追问速答见 [DEMO_RUNBOOK.md](DEMO_RUNBOOK.md)。预设内容位于 [data/demo_scenarios.json](data/demo_scenarios.json)，其中第 1 至第 3 轮必须使用同一项目 ID 连续运行，才能展示动态后验更新。
 
 ## 这版实现了什么、没有声称什么
 
@@ -96,4 +98,4 @@ Amazon/服装购物数据可以作为现有 GitHub 仓库的工程参考，但**
 
 ## Kiro 使用方式
 
-Kiro Web 应作为开发协作者，而不是生产运行时。登录后选择 GitHub 仓库，创建独立分支，并将 [kiro_build_prompt.md](kiro_build_prompt.md) 作为第一条任务粘贴给它。要求它只在新目录内继续迭代并运行测试，不改原购物 Agent。
+Kiro Web 应作为开发协作者，而不是生产运行时。它目前要求 Pro 或更高计划；Free 账户不能使用 `app.kiro.dev` 的网页开发界面。可用时，连接 GitHub 仓库、创建独立分支，并将 [kiro_build_prompt.md](kiro_build_prompt.md) 作为第一条任务粘贴给它。要求它只在新目录内继续迭代并运行测试，不改原购物 Agent。参见 [Kiro Web 设置说明](https://kiro.dev/docs/web/setup/) 和 [GitHub 连接说明](https://kiro.dev/docs/web/github/)。

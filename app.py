@@ -21,6 +21,9 @@ from agent import DesignPreferenceAgent
 
 ROOT = Path(__file__).resolve().parent
 DEFAULT_PLANS = (ROOT / "data" / "demo_plans.json").read_text(encoding="utf-8")
+DEMO_SCENARIOS = json.loads(
+    (ROOT / "data" / "demo_scenarios.json").read_text(encoding="utf-8")
+)
 
 ACTION_LABELS = {
     "save": "收藏",
@@ -96,6 +99,55 @@ def _ensure_project(project_id: str) -> None:
             *st.session_state.get("known_projects", set()),
             project_id,
         }
+
+
+def _apply_demo_scenario(scenario: Mapping[str, Any]) -> None:
+    """在构建输入控件前载入比赛预设，不改写 Agent 的既有状态。"""
+    quality = dict(scenario.get("quality", {}))
+    context = dict(scenario.get("context", {}))
+    st.session_state.update(
+        {
+            "project_id_input": str(scenario["project_id"]),
+            "homeowner_text_input": str(scenario.get("text", "")),
+            "image_tags_input": ", ".join(scenario.get("image_tags", [])),
+            "actions_input": list(scenario.get("actions", [])),
+            "dwell_seconds_input": int(scenario.get("dwell_seconds", 0)),
+            "source_reliability_input": float(quality.get("source_reliability", 0.55)),
+            "duplicate_ratio_input": float(quality.get("duplicate_ratio", 0.0)),
+            "event_density_input": float(quality.get("event_density", 1.0)),
+            "budget_max_input": int(context.get("budget_max") or 0),
+            "area_sqm_input": int(context.get("area_sqm") or 0),
+            "family_members_input": int(context.get("family_members") or 1),
+            "no_structural_change_input": bool(context.get("no_structural_change", False)),
+            "confirmed_dimensions_input": list(scenario.get("confirmed_dimensions", [])),
+            "plans_text_input": json.dumps(
+                scenario.get("plans", []), ensure_ascii=False, indent=2
+            ),
+        }
+    )
+    st.session_state.pop("last_result", None)
+
+
+def _initialize_widget_defaults() -> None:
+    """避免 preset 载入与 Streamlit widget 默认值发生冲突。"""
+    defaults: Dict[str, Any] = {
+        "project_id_input": "home_demo_live",
+        "homeowner_text_input": "我喜欢温暖原木和现代简约，小户型希望通透、收纳多，预算十八万以内。",
+        "image_tags_input": "原木, 现代简约, 收纳",
+        "actions_input": ["save"],
+        "dwell_seconds_input": 82,
+        "source_reliability_input": 0.88,
+        "duplicate_ratio_input": 0.06,
+        "event_density_input": 1.2,
+        "budget_max_input": 180000,
+        "area_sqm_input": 78,
+        "family_members_input": 3,
+        "no_structural_change_input": True,
+        "confirmed_dimensions_input": [],
+        "plans_text_input": DEFAULT_PLANS,
+    }
+    for key, value in defaults.items():
+        st.session_state.setdefault(key, value)
 
 
 def _render_preferences(preferences: Sequence[Mapping[str, Any]]) -> None:
@@ -206,6 +258,7 @@ def _render_next_action(next_action: Mapping[str, Any]) -> None:
 
 def main() -> None:
     st.set_page_config(page_title="装修偏好共识 Agent", page_icon="🏠", layout="wide")
+    _initialize_widget_defaults()
     st.title("🏠 装修偏好共识 Agent · 现场演示")
     st.write(
         "把屋主的一次浏览/决策会话转成可解释的偏好后验，检查候选方案是否落实偏好，"
@@ -215,7 +268,24 @@ def main() -> None:
 
     with st.sidebar:
         st.header("演示控制")
-        project_id = st.text_input("项目 / 屋主匿名 ID", value="home_demo_live")
+        scenario_name = st.selectbox(
+            "比赛演示预设",
+            options=["自定义输入", *DEMO_SCENARIOS],
+            key="scenario_selector",
+        )
+        if scenario_name != "自定义输入":
+            scenario = DEMO_SCENARIOS[scenario_name]
+            st.caption(str(scenario["description"]))
+            st.caption(f"预期：{scenario['expected_hint']}")
+            if st.button("载入预设到输入区", width="stretch"):
+                _apply_demo_scenario(scenario)
+                st.rerun()
+        else:
+            st.caption("可直接输入自定义屋主会话，或选择预设以按比赛脚本演示。")
+
+        project_id = st.text_input(
+            "项目 / 屋主匿名 ID", key="project_id_input"
+        )
         if st.button("重置当前项目", width="stretch"):
             if "agent" not in st.session_state:
                 st.session_state.agent = DesignPreferenceAgent()
@@ -235,48 +305,69 @@ def main() -> None:
         st.header("A. 屋主本次会话证据 D_it")
         homeowner_text = st.text_area(
             "屋主搜索词、自然语言描述或语音转写",
-            value="我喜欢温暖原木和现代简约，小户型希望通透、收纳多，预算十八万以内。",
             height=120,
             help="例如：我不想要复杂欧式，暖光和原木家具让我感觉放松；收纳必须够。",
+            key="homeowner_text_input",
         )
         image_tags = st.text_input(
             "图片 / 收藏案例标签（用逗号分隔）",
-            value="原木, 现代简约, 收纳",
             help="本 MVP 使用人工或视觉模型提取的标签；未来可接入图片 embedding。",
+            key="image_tags_input",
         )
         selected_actions = st.multiselect(
             "屋主已发生的交互信号",
             options=list(ACTION_LABELS),
-            default=["save"],
             format_func=lambda item: ACTION_LABELS[item],
+            key="actions_input",
         )
-        dwell_seconds = st.number_input("本次总停留时长（秒）", min_value=0, max_value=3600, value=82, step=1)
+        dwell_seconds = st.number_input(
+            "本次总停留时长（秒）",
+            min_value=0,
+            max_value=3600,
+            step=1,
+            key="dwell_seconds_input",
+        )
 
         with st.expander("证据质量与异常密度输入", expanded=False):
-            source_reliability = st.slider("来源可靠度", 0.0, 1.0, 0.88, 0.01)
-            duplicate_ratio = st.slider("重复内容比例", 0.0, 1.0, 0.06, 0.01)
-            event_density = st.slider("会话事件密度", 0.0, 12.0, 1.2, 0.1)
+            source_reliability = st.slider(
+                "来源可靠度", 0.0, 1.0, step=0.01, key="source_reliability_input"
+            )
+            duplicate_ratio = st.slider(
+                "重复内容比例", 0.0, 1.0, step=0.01, key="duplicate_ratio_input"
+            )
+            event_density = st.slider(
+                "会话事件密度", 0.0, 12.0, step=0.1, key="event_density_input"
+            )
             st.caption("密度明显高、且重复内容多时，系统会将它视作可能的刷屏/异常证据。")
 
     with plan_col:
         st.header("B. 外生情境 c_it 与候选方案")
-        budget_max = st.number_input("装修预算上限（元）", min_value=0, value=180000, step=10000)
-        area_sqm = st.number_input("套内 / 设计面积（㎡）", min_value=0, value=78, step=1)
-        family_members = st.number_input("家庭成员数", min_value=1, value=3, step=1)
-        no_structural_change = st.checkbox("屋主不接受结构改造", value=True)
+        budget_max = st.number_input(
+            "装修预算上限（元）", min_value=0, step=10000, key="budget_max_input"
+        )
+        area_sqm = st.number_input(
+            "套内 / 设计面积（㎡）", min_value=0, step=1, key="area_sqm_input"
+        )
+        family_members = st.number_input(
+            "家庭成员数", min_value=1, step=1, key="family_members_input"
+        )
+        no_structural_change = st.checkbox(
+            "屋主不接受结构改造", key="no_structural_change_input"
+        )
         confirmed_dimensions = st.multiselect(
             "本轮已由屋主明确确认的偏好",
             options=list(DIMENSION_LABELS),
             format_func=lambda item: DIMENSION_LABELS[item],
+            key="confirmed_dimensions_input",
         )
         st.caption("预算、面积、家庭变化等放在外生情境中，不与收藏/点击等原始证据重复计算。")
 
         with st.expander("编辑候选方案（JSON）", expanded=False):
             plans_text = st.text_area(
                 "候选方案列表",
-                value=DEFAULT_PLANS,
                 height=340,
                 help="每个方案至少应包含 name、estimated_cost、min_area_sqm、requires_structural_change 和 features。",
+                key="plans_text_input",
             )
             st.caption("features 的取值范围为 0–1，例如 warm_wood: 0.9 表示方案高度体现温暖原木。")
 
