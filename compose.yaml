@@ -1,0 +1,13 @@
+services:
+  alignspace:
+    build: .
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - alignspace-data:/app/data
+    restart: unless-stopped
+
+volumes:
+  alignspace-data:
